@@ -23,7 +23,7 @@ class Game
         show.print_which_square
         coordinates = gets.chomp.upcase.to_sym      #demande au joueur de choisir une coordonées
         case coordinates 
-        when /[A-C][1-3]/
+        when /^[ABC][123]$/
             if board.moves_hash[coordinates] == "X" || board.moves_hash[coordinates] == "O"    #gérer les cases déjà jouées
                 puts "Cette case à déjà été jouée, choisis une case vide"
                 ask_move(player_index)
