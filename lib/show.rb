@@ -6,10 +6,11 @@ class Show
     end
 
     def welcome
-        puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-        puts "|Bienvenue dans           **Le jeu du MORPION**               |"
-        puts "|But du jeu : Etre le premier a faire une ligne de 3 symboles |"
-        puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        puts
+        puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".colorize(:yellow)
+        puts "|".colorize(:yellow)+"Bienvenue dans          **"+"Le jeu du MORPION".colorize(:blue)+"**                "+"|".colorize(:yellow)
+        puts "|".colorize(:yellow)+"But du jeu : Etre le premier a faire une ligne de 3 symboles "+"|".colorize(:yellow)
+        puts "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++".colorize(:yellow)
     end
 
     def print_board
@@ -27,14 +28,14 @@ class Show
     def print_which_square
         puts
         puts "Quelle case veux-tu jouer ? Entre une coordonée au format suivant :"
-        puts "Une majuscule de A à C suivie d'un chiffre de 1 à 3, comme A1 ou C3 par exemple"
+        puts "Une lettre a, b ou c, suivie d'un chiffre de 1 à 3, comme a1 ou c3 par exemple"
         puts
         print "> "
     end
 
     def continue?
         puts
-        puts "------->  Entrée pour continuer  <---------"
+        puts "------->  Entrée pour continuer  <---------".colorize(:light_black)
         gets
         puts
     end
