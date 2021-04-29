@@ -14,7 +14,7 @@ class Show
     end
 
     def print_board
-        system "clear" 
+        system "clear"  # permet d'avoir le plateau qui reste sur place
         puts "     A   B   C"
         puts "   _____________"
         print " 1 | #{board.moves_hash[:A1]} "; print "| #{board.moves_hash[:B1]} "; puts "| #{board.moves_hash[:C1]} |"
@@ -33,7 +33,7 @@ class Show
         print "> "
     end
 
-    def continue?
+    def continue?      # pour mettre des temps mort dans le jeu et segmenter l'information
         puts
         puts "------->  Entrée pour continuer  <---------".colorize(:light_black)
         gets

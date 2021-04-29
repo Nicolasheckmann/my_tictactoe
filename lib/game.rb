@@ -2,13 +2,12 @@ class Game
     attr_accessor :player_array, :board, :show
 
     def initialize
-        #cree un nouveau board object
-        self.player_array = [] << Player.new("Joueur 1", "X") << Player.new("Joueur 2", "O")
-        self.board = Board.new
-        self.show = Show.new(board)
+        self.player_array = [] << Player.new("Joueur 1", "X") << Player.new("Joueur 2", "O")    #crée deux joueurs que l'on va update plus loin
+        self.board = Board.new  #cree un nouveau board object
+        self.show = Show.new(board) #nvx show object
     end
 
-    def create_player
+    def create_player   #met a jour les noms des joueurs
         self.player_array.each do |player|
             puts
             puts "#{player.name} comment souhaites tu t'appeller ?"
@@ -21,20 +20,17 @@ class Game
     end
 
     def ask_move(player_index)
-        #demande au player suivant de choisir une coordonées
         show.print_which_square
-        coordinates = gets.chomp.upcase.to_sym
-        #met à jour le hash du board
-        #gérer coordinates non valides
-        case coordinates
+        coordinates = gets.chomp.upcase.to_sym      #demande au joueur de choisir une coordonées
+        case coordinates 
         when /[A-C][1-3]/
-            if board.moves_hash[coordinates] == "X" || board.moves_hash[coordinates] == "O"
+            if board.moves_hash[coordinates] == "X" || board.moves_hash[coordinates] == "O"    #gérer les cases déjà jouées
                 puts "Cette case à déjà été jouée, choisis une case vide"
                 ask_move(player_index)
             else
-                board.moves_hash[coordinates] = player_array[player_index].x_or_o
+                board.moves_hash[coordinates] = player_array[player_index].x_or_o   #met à jour le hash du board
             end
-        else
+        else       #gérer coordinates non valides
             puts
             puts "Ceci n'est pas une coordonée valide"
             ask_move(player_index)
@@ -43,7 +39,7 @@ class Game
 
     def active_player
         puts
-        case board.moves_hash.select{ |key, value| value == "X" || value == "O" }.length 
+        case board.moves_hash.select{ |key, value| value == "X" || value == "O" }.length    #détermine a qui le tour par rapport au nombre de coup joué
         when 0, 2, 4, 6, 8
             puts "C'est a "+"#{player_array[0].name}".colorize(:light_red)+" de jouer les "+"#{player_array[0].x_or_o}".colorize(:light_red)
         when 1, 3, 5, 7
@@ -54,9 +50,8 @@ class Game
     end
 
     def determinate_winner
-        #get un array avec les values du hash ["X", "O", ..., "X"]
-        value_array = board.moves_hash.values
-        if value_array[0] == value_array[1] && value_array[1] == value_array[2] && value_array[0] != " "
+        value_array = board.moves_hash.values       #get un array avec les values du hash ["X", "O", ..., "X"]
+        if value_array[0] == value_array[1] && value_array[1] == value_array[2] && value_array[0] != " "    # winner si a1 b1 c1 on été joués par le mm joueur
             return 1
         elsif value_array[3] == value_array[4] && value_array[4] == value_array[5] && value_array[3] != " "
             return 1
@@ -76,11 +71,11 @@ class Game
     end
 
     def play_turn
-        until determinate_winner || board.is_full?
-            active_player
-            ask_move(0)
-            show.print_board
-            if determinate_winner || board.is_full?
+        until determinate_winner || board.is_full?  # tant que pas de gagnant ou board pas plein
+            active_player                           # on annonce a qui le tour
+            ask_move(0)                             # on demande de jouer
+            show.print_board                        # affiche le board
+            if determinate_winner || board.is_full? 
                 break
             end
             active_player
@@ -94,7 +89,7 @@ class Game
 
     def game_results
         if determinate_winner
-            case board.moves_hash.select{ |key, value| value == "X" || value == "O" }.length
+            case board.moves_hash.select{ |key, value| value == "X" || value == "O" }.length #si gagnant on annonce le gagnant
             when 5, 7, 9
                 puts
                 puts "#{player_array[0].name}".colorize(:light_red)+" a gagné! Bien joué!"
@@ -104,7 +99,7 @@ class Game
             else
                 puts "bug case statement?"
             end
-        elsif !determinate_winner && board.is_full?
+        elsif !determinate_winner && board.is_full? #si pas de gagnant et board plein, match nul
             puts
             puts "Match nul! Personne ne gagne, personne ne perd..."
         else
